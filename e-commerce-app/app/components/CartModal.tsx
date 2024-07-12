@@ -10,29 +10,70 @@ const CartModal = () => {
             {!cartItems ? (
                 <div className="">Cart is empty!!</div>
             ) : (
-                <div className="flex flex-col gap-8">
-                    <div className="flex gap-4">
-                        <div className="">
-                            <Image src='/woman.png' alt="" width={72} height={96} className="object-cover rounded-md" />
-                        </div>
-                        <div className="flex flex-col justify-between w-full">
-                            {/* Top */}
+                <div>
+                    <h2 className="text-xl">Shopping Cart</h2>
+                    {/* List */}
+                    <div className="flex flex-col gap-8">
+                        {/* Items */}
+                        <div className="flex gap-4">
                             <div className="">
-                                {/* Title */}
-                                <div className="flex items-center justify-between gap-8">
-                                    <h3 className="font-semibold">Product Name</h3>
-                                    <div className="p-1 bg-gray-50 rounded-sm">$49</div>
+                                <Image src='/woman.png' alt="" width={72} height={96} className="object-cover rounded-md" />
+                            </div>
+                            <div className="flex flex-col justify-between w-full">
+                                {/* Top */}
+                                <div className="">
+                                    {/* Title */}
+                                    <div className="flex items-center justify-between gap-8">
+                                        <h3 className="font-semibold">Product Name</h3>
+                                        <div className="p-1 bg-gray-50 rounded-sm">$49</div>
+                                    </div>
+                                    {/* Desc */}
+                                    <div className="text-sm text-gray-500">
+                                        available
+                                    </div>
                                 </div>
-                                {/* Desc */}
-                                <div className="text-sm text-gray-500">
-                                    available
+                                {/* Bootom */}
+                                <div className="flex justify-between text-sm">
+                                    <span className="text-gray-500">Qty. 2</span>
+                                    <span className="text-blue-500">Remove</span>
                                 </div>
                             </div>
-                            {/* Bootom */}
-                            <div className="flex justify-between text-sm">
-                                <span className="text-gray-500">Qty. 2</span>
-                                <span className="text-blue-500">Remove</span>
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="">
+                                <Image src='/woman.png' alt="" width={72} height={96} className="object-cover rounded-md" />
                             </div>
+                            <div className="flex flex-col justify-between w-full">
+                                {/* Top */}
+                                <div className="">
+                                    {/* Title */}
+                                    <div className="flex items-center justify-between gap-8">
+                                        <h3 className="font-semibold">Product Name</h3>
+                                        <div className="p-1 bg-gray-50 rounded-sm">$49</div>
+                                    </div>
+                                    {/* Desc */}
+                                    <div className="text-sm text-gray-500">
+                                        available
+                                    </div>
+                                </div>
+                                {/* Bootom */}
+                                <div className="flex justify-between text-sm">
+                                    <span className="text-gray-500">Qty. 2</span>
+                                    <span className="text-blue-500">Remove</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Bootom */}
+                    <div className="">
+                        <div className="flex items-center justify-between font-semibold mt-2">
+                            <span>Subtotal</span>
+                            <span>$49</span>
+                        </div>
+                        <p className="text-gray-500 text-sm mt-2 mb-4">Shipping and taxes calculated at checkout</p>
+                        <div className="flex justify-between text-sm">
+                            <button className="rounded-md py-3 px-4 ring-1 ring-gray-300">View cart</button>
+                            <button className="rounded-md py-3 px-4 bg-black text-white">Checkout</button>
                         </div>
                     </div>
                 </div>
