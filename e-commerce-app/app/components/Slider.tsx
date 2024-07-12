@@ -1,6 +1,5 @@
 'use client'
 
-import { Silkscreen } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -43,7 +42,8 @@ const Slider = () => {
                         key={slide.id}
                     >
                         {/* TEXT CONTAINER */}
-                        <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-12 text-center">
+                        <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 
+                        2xl:gap-12 text-center">
                             <h2 className="text-xl lg:text-3xl 2xl:text-5xl">
                                 {slide.description}
                             </h2>
@@ -69,9 +69,13 @@ const Slider = () => {
                     </div>
                 ))}
             </div>
-
             {
-                
+                slides?.map((slide, i) => (
+                    <div className={`w-3 h-3 rounded-full ring-1 ring-gry-600 cursor-poinetr flex items-center 
+                        justify-center ${current === i ? "scale-150" : ""}`} key={slide.id}>
+                        {current === i && (<div className="w-[6px] h-[6px] bg-gray-600"></div>)}
+                    </div>
+                ))
             }
         </div>
     )
