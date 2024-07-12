@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .scrollbarhide::-webkit-scrollbar{
+  display: none;
+}
+.scrollbarhide{
+  scrollbar-width: none;
+} */
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
