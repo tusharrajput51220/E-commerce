@@ -1,6 +1,14 @@
+import ProductImages from "../components/ProductImages"
+
 const SinglePage = () => {
     return (
-        <div>Single Page</div>
+        <div>
+            {/* Img */}
+            <div className="">
+                <ProductImages />
+            </div>
+            {/* Text */}
+        </div>
     )
 }
 
