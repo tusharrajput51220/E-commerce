@@ -7,7 +7,7 @@ import { wixClientServer } from "../lib/wixClientServer";
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
   // console.log(params.slug);
 
-  const wixClient = await wixClientServer();
+  const wixClient = wixClientServer();
   const products = await wixClient.products
     .queryProducts()
     .eq("slug", params.slug)

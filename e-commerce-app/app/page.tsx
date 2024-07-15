@@ -23,6 +23,9 @@ const HomePage = async () => {
   // const  res = await wixClient.products.queryProducts().find();
   // console.log(res)
 
+//   NEXT_PUBLIC_MY_NEXT_APP_CLIENT_ID=19a2bc8d-409e-43e6-91bb-3fdbbea064d7
+// FEATURED_PRODUCTS_CATEGORY_ID=f89a6ef4-9296-b75e-a80a-5d67ad851e1c
+
   return (
     <div>
       <Slider />
