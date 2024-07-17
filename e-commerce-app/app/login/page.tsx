@@ -23,7 +23,14 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const pathname = usePathname();
-  const router=useRouter()
+  const router = useRouter();
+  const wixClient = useWixClient();
+  const isLoggedIn = wixClient.auth.loggedIn();
+  // console.log(isLoggedIn);
+
+  if (isLoggedIn) {
+    router.push("/");
+  }
 
   const formTitle =
     mode == MODE.LOGIN
@@ -42,8 +49,6 @@ const LoginPage = () => {
       : mode == MODE.RESET_PASSWORD
       ? "Reset"
       : "Verify";
-
-  const wixClient = useWixClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,11 +70,12 @@ const LoginPage = () => {
             profile: { nickname: username },
           });
           break;
-        case MODE.LOGIN:
+        case MODE.RESET_PASSWORD:
           response = await wixClient.auth.sendPasswordResetEmail(
             email,
             pathname
           );
+          setMessage("Reset mail sent successfully !!")
           break;
         case MODE.EMAIL_VERIFICATION:
           response = await wixClient.auth.processVerification({
@@ -79,22 +85,41 @@ const LoginPage = () => {
         default:
           break;
       }
-    //   console.log(response);
-    switch (response?.loginState) {
+      //   console.log(response);
+      switch (response?.loginState) {
         case LoginState.SUCCESS:
-            setMessage("Successfull !! You are being directed.")
-            const tokens=await wixClient.auth.getMemberTokensForDirectLogin(response.data.sessionToken)
-            // console.log(tokens)
-            Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken),{
-                expires: 2
-            })
-            wixClient.auth.setTokens(tokens)
-            router.push("/")
-            break;
-    
+          setMessage("Successfull !! You are being directed.");
+          const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
+            response.data.sessionToken
+          );
+          // console.log(tokens)
+          Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
+            expires: 2,
+          });
+          wixClient.auth.setTokens(tokens);
+          router.push("/");
+          break;
+        case LoginState.FAILURE:
+          if (
+            response.errorCode == "invalidEmail" ||
+            response.errorCode == "invalidPassword"
+          ) {
+            setError("Invalid email or password");
+          } else if (response.errorCode == "emailAlreadyExists") {
+            setError("Email already exists!");
+          } else if (response.errorCode == "resetPassword") {
+            setError("Reset your password!");
+          } else {
+            setError("Something went wrong!!");
+          }
+        case LoginState.EMAIL_VERIFICATION_REQUIRED:
+          setMode(MODE.EMAIL_VERIFICATION)  
+        case LoginState.OWNER_APPROVAL_REQUIRED:
+          setMessage("Owner Approval Pending!!")  
+
         default:
-            break;
-    }
+          break;
+      }
     } catch (err) {
       console.log(err);
       setError("Something went wrong!");
