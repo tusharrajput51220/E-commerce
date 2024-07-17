@@ -84,7 +84,7 @@ const LoginPage = () => {
         case LoginState.SUCCESS:
             setMessage("Successfull !! You are being directed.")
             const tokens=await wixClient.auth.getMemberTokensForDirectLogin(response.data.sessionToken)
-            console.log(tokens)
+            // console.log(tokens)
             Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken),{
                 expires: 2
             })
