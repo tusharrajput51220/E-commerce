@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useWixClient } from "../hooks/useWixClient";
+import { useCartStore } from "../hooks/useCartStore";
 
 const Add = ({
   productId,
@@ -24,21 +25,23 @@ const Add = ({
     }
   };
 
-  const wixClient=useWixClient()
-  const addItem=async ()=>{
-    const response=await wixClient.currentCart.addToCurrentCart({
-      lineItems: [
-        {
-          catalogReference:{  
-            appId:process.env.NEXT_PUBLIC_WIX_APP_ID!,
-            catalogItemId: productId,
-            ...(variantId && {options: {variantId}})
-          },
-          quantity: stockNumber
-        }
-      ]
-    })
-  }
+  const wixClient = useWixClient();
+  const {addItem, isLoading}=useCartStore()
+  // console.log(wixClient, productId, variantId, qty)
+  // const addItem=async ()=>{
+  //   const response=await wixClient.currentCart.addToCurrentCart({
+  //     lineItems: [
+  //       {
+  //         catalogReference:{
+  //           appId:process.env.NEXT_PUBLIC_WIX_APP_ID!,
+  //           catalogItemId: productId,
+  //           ...(variantId && {options: {variantId}})
+  //         },
+  //         quantity: qty
+  //       }
+  //     ]
+  //   })
+  // }
 
   return (
     <div className="flex flex-col gap-4">
@@ -73,7 +76,8 @@ const Add = ({
 
         <button
           className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white 
-      disabled:cursor-not-allowed disabled:bg-pink-200 disabled:text-white disabled:ring-none" onClick={addItem}
+      disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none" disabled={isLoading}
+          onClick={() => addItem(wixClient, productId, variantId, qty)}
         >
           Add to Cart
         </button>
