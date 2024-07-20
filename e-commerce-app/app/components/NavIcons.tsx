@@ -37,21 +37,6 @@ const NavIcons = () => {
 
   console.log(cart);
 
-  // Auth with wix
-  // const wixClient=useWixClient()
-  // const login=async()=>{
-  //   const loginRequestData = wixClient.auth.generateOAuthData(
-  //     "http://localhost:3000"
-  //     // "https://www.mysite.com/callback",
-  //     // "https://www.mysite.com/login",
-  //   );
-  //   // console.log(loginRequestData)
-  //   localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData))
-  //   const {authUrl}=await wixClient.auth.getAuthUrl(loginRequestData)
-  //   // console.log(authUrl)
-  //   window.location.href=authUrl
-  // }
-
   const handleLogOut = async () => {
     setIsLoading(true);
     Cookies.remove("refreshToken");

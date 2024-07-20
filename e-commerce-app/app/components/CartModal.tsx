@@ -6,30 +6,15 @@ import { media as wixMedia } from "@wix/sdk";
 import { useWixClient } from "../hooks/useWixClient";
 
 const CartModal = () => {
-  // TEMPORARY
-  // const cartItems = true;
   const wixClient = useWixClient();
   const { cart, isLoading, removeItem } = useCartStore();
-
-  // useEffect(() => {
-  //   getCart(wixClient);
-  // }, [wixClient, getCart]);
-
-  // console.log(cart);
-  // useEffect(() => {
-  //   const getCart=async()=>{
-  //       const response=await wixClient.currentCart.getCurrentCart()
-  //       console.log(response)
-  //   }
-  //   getCart()
-  // },[wixClient])
 
   return (
     <div
       className=" w-max absolute p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white top-12 right-0 flex flex-col
          gap-6 z-20"
     >
-      {!cart.lineItems ? (
+      {cart.lineItems?.length==0 ? (
         <div className="">Cart is empty!!</div>
       ) : (
         <div>
@@ -37,7 +22,7 @@ const CartModal = () => {
           {/* List */}
           <div className="flex flex-col gap-8">
             {/* Items */}
-            {cart.lineItems.map((item) => (
+            {cart.lineItems?.map((item) => (
               <div className="flex gap-4" key={item._id}>
                 <div className="">
                   {item.image && (

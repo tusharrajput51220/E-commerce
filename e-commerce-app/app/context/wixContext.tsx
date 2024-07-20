@@ -22,7 +22,7 @@ const wixClient = createClient({
     },
   }),
 });
-// console.log(wixClient)
+console.log(wixClient)
 
 export type WixClient = typeof wixClient;
 

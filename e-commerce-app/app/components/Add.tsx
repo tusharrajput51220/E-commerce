@@ -13,35 +13,20 @@ const Add = ({
   variantId: string;
   stockNumber: number;
 }) => {
-  const [qty, setQty] = useState(1);
-  // const stock = 4;
+  
+  const [quantity, setQuantity] = useState(1);
 
   const handleQuantity = (type: "i" | "d") => {
-    if (type == "d" && qty > 1) {
-      setQty((prev) => prev - 1);
+    if (type == "d" && quantity > 1) {
+      setQuantity((prev) => prev - 1);
     }
-    if (type == "i" && qty < stockNumber) {
-      setQty((prev) => prev + 1);
+    if (type == "i" && quantity < stockNumber) {
+      setQuantity((prev) => prev + 1);
     }
   };
 
   const wixClient = useWixClient();
-  const {addItem, isLoading}=useCartStore()
-  // console.log(wixClient, productId, variantId, qty)
-  // const addItem=async ()=>{
-  //   const response=await wixClient.currentCart.addToCurrentCart({
-  //     lineItems: [
-  //       {
-  //         catalogReference:{
-  //           appId:process.env.NEXT_PUBLIC_WIX_APP_ID!,
-  //           catalogItemId: productId,
-  //           ...(variantId && {options: {variantId}})
-  //         },
-  //         quantity: qty
-  //       }
-  //     ]
-  //   })
-  // }
+  const { addItem, isLoading } = useCartStore();
 
   return (
     <div className="flex flex-col gap-4">
@@ -55,7 +40,7 @@ const Add = ({
             >
               -
             </button>
-            {qty}
+            {quantity}
             <button
               className="cursor-pointer text-xl"
               onClick={() => handleQuantity("i")}
@@ -76,8 +61,9 @@ const Add = ({
 
         <button
           className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white 
-      disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none" disabled={isLoading}
-          onClick={() => addItem(wixClient, productId, variantId, qty)}
+      disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
+          disabled={isLoading}
+          onClick={() => addItem(wixClient, productId, variantId, quantity)}
         >
           Add to Cart
         </button>
