@@ -23,9 +23,9 @@ const HomePage = async () => {
   // const  res = await wixClient.products.queryProducts().find();
   // console.log(res)
 
-//   NEXT_PUBLIC_MY_NEXT_APP_CLIENT_ID=19a2bc8d-409e-43e6-91bb-3fdbbea064d7
-// FEATURED_PRODUCTS_CATEGORY_ID=f89a6ef4-9296-b75e-a80a-5d67ad851e1c
-// NEXT_PUBLIC_WIX_APP_ID=215238eb-22a5-4c36-9e7b-e7c08025e04e
+  //   NEXT_PUBLIC_MY_NEXT_APP_CLIENT_ID=19a2bc8d-409e-43e6-91bb-3fdbbea064d7
+  // FEATURED_PRODUCTS_CATEGORY_ID=f89a6ef4-9296-b75e-a80a-5d67ad851e1c
+  // NEXT_PUBLIC_WIX_APP_ID=215238eb-22a5-4c36-9e7b-e7c08025e04e
 
   return (
     <div>
@@ -35,6 +35,13 @@ const HomePage = async () => {
         <Suspense fallback={"loading"}>
           <ProductList
             categoryId={process.env.FEATURED_PRODUCTS_CATEGORY_ID!}
+            limit={4}
+          />
+        </Suspense>
+        <h1 className="text-2xl mt-[50px]">New Arrivals</h1>
+        <Suspense fallback={"loading"}>
+          <ProductList
+            categoryId={process.env.CAP_PRODUCTS_CATEGORY_ID!}
             limit={4}
           />
         </Suspense>
