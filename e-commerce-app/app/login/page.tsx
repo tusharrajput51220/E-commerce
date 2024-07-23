@@ -36,19 +36,19 @@ const LoginPage = () => {
     mode == MODE.LOGIN
       ? "Log in"
       : mode == MODE.REGISTER
-      ? "Register"
-      : mode == MODE.RESET_PASSWORD
-      ? "Reset Your Password"
-      : "Verify Your Email";
+        ? "Register"
+        : mode == MODE.RESET_PASSWORD
+          ? "Reset Your Password"
+          : "Verify Your Email";
 
   const buttonTitle =
     mode == MODE.LOGIN
       ? "Log"
       : mode == MODE.REGISTER
-      ? "Register"
-      : mode == MODE.RESET_PASSWORD
-      ? "Reset"
-      : "Verify";
+        ? "Register"
+        : mode == MODE.RESET_PASSWORD
+          ? "Reset"
+          : "Verify";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,14 +85,14 @@ const LoginPage = () => {
         default:
           break;
       }
-      //   console.log(response);
+      console.log(response);
       switch (response?.loginState) {
         case LoginState.SUCCESS:
-          setMessage("Successfull !! You are being directed.");
           const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
             response.data.sessionToken
           );
-          // console.log(tokens)
+          console.log(tokens)
+          setMessage("Successfull !! You are being directed.");
           Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
             expires: 2,
           });
@@ -113,9 +113,9 @@ const LoginPage = () => {
             setError("Something went wrong!!");
           }
         case LoginState.EMAIL_VERIFICATION_REQUIRED:
-          setMode(MODE.EMAIL_VERIFICATION)  
+          setMode(MODE.EMAIL_VERIFICATION)
         case LoginState.OWNER_APPROVAL_REQUIRED:
-          setMessage("Owner Approval Pending!!")  
+          setMessage("Owner Approval Pending!!")
 
         default:
           break;

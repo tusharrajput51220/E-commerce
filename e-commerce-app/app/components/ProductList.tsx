@@ -36,6 +36,7 @@ const ProductList = async ({
           ? parseInt(searchParams.page) * (limit || PRODUCT_PER_PAGE)
           : 0
       );
+    // console.log("jj",productQuery);
 
     if (searchParams?.sort) {
       const [sortType, sortBy] = searchParams.sort.split(" ");
@@ -47,15 +48,15 @@ const ProductList = async ({
       }
     }
 
-    console.log("Querying products with parameters:", {
-      categoryId,
-      limit,
-      searchParams,
-    });
+    // console.log("Querying products with parameters:", {
+    //   categoryId,
+    //   limit,
+    //   searchParams,
+    // });
 
     const res = await productQuery.find();
 
-    console.log("Products fetched successfully:", res.items);
+    // console.log("Products fetched successfully:", res.items.length);
 
     return (
       <div className="mt-12 flex gap-x-8 gap-y-16 justify-between flex-wrap">
