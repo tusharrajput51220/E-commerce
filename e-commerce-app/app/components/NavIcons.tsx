@@ -3,16 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CartModal from "./CartModal";
 import { useWixClient } from "../hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "../hooks/useCartStore";
 
 const NavIcons = () => {
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const pathName = usePathname();
   const wixClient = useWixClient();
@@ -29,13 +29,13 @@ const NavIcons = () => {
     }
   };
 
-  const { cart,counter, getCart } = useCartStore();
+  const { cart, counter, getCart } = useCartStore();
 
   useEffect(() => {
     getCart(wixClient);
   }, [wixClient, getCart]);
 
-  console.log(cart);
+  // console.log(cart);
 
   const handleLogOut = async () => {
     setIsLoading(true);
@@ -45,6 +45,31 @@ const NavIcons = () => {
     setIsProfileOpen(false);
     router.push(logoutUrl);
   };
+
+  // Ref for the cart modal
+  const cartModalRef = useRef<HTMLDivElement>(null);
+
+  // Close cart modal when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        cartModalRef.current &&
+        !cartModalRef.current.contains(event.target as Node)
+      ) {
+        setIsCartOpen(false);
+      }
+    };
+
+    if (isCartOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isCartOpen]);
 
   return (
     <div className="flex items-center gap-4 xl:gap-6 relative">
@@ -90,7 +115,11 @@ const NavIcons = () => {
           {counter}
         </div>
       </div>
-      {isCartOpen && <CartModal />}
+      {isCartOpen && (
+        <div ref={cartModalRef}>
+          <CartModal />
+        </div>
+      )}
     </div>
   );
 };

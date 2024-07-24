@@ -21,13 +21,25 @@ export const useCartStore = create<CartState>((set) => ({
   isLoading: true,
   counter: 0,
   getCart: async (wixClient) => {
-    const cart = await wixClient.currentCart.getCurrentCart();
-    set({
-      cart: cart || [],
-      isLoading: false,
-      counter: cart?.lineItems.length || 0,
-    });
+    try {
+      const cart = await wixClient.currentCart.getCurrentCart();
+      set({
+        cart: cart || [],
+        isLoading: false,
+        counter: cart?.lineItems.length || 0,
+      });
+    } catch (err) {
+      set((prev) => ({ ...prev, isLoading: false }));
+    }
   },
+  // getCart: async (wixClient) => {
+  //   const cart = await wixClient.currentCart.getCurrentCart();
+  //   set({
+  //     cart: cart || [],
+  //     isLoading: false,
+  //     counter: cart?.lineItems.length || 0,
+  //   });
+  // },
   addItem: async (wixClient, productId, variantId, quantity) => {
     set((state) => ({ ...state, isLoading: true }));
     const lineItem = {
@@ -42,7 +54,7 @@ export const useCartStore = create<CartState>((set) => ({
     // console.log("Line item to be added:", lineItem);
 
     try {
-      console.log(lineItem)
+      console.log(lineItem);
       const response = await wixClient.currentCart.addToCurrentCart({
         lineItems: [lineItem],
       });
